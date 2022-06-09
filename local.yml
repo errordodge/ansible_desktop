@@ -115,25 +115,9 @@
         minute: "*/30"
         job: cd ~/bin && ./update-all.sh
 
-    - name: add ansible user
-      become: true
-      user:
-        name: ansibleDaemon
-        system: yes
-
-    - name: set up sudo for ansible user
-      become: true
-      copy:
-        src: files/sudoer_ansibleDaemon
-        dest: /etc/sudoers.d/ansibleDaemon
-        owner: root
-        group: wheel
-        mode: 0440
-
     - name: add ansible-pull cron job
-      become: true
       cron:
         name: ansible auto-provision
-        user: ansibleDaemon
+        user: steinarvollebaek
         minute: "*/5"
         job: ansible-pull -o -U https://github.com/errordodge/ansible_desktop.git
