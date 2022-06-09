@@ -12,6 +12,12 @@
       - google-drive
       - iterm2
       - slack
+      - spectacle
+      - zoom
+      - vmware-horizon-client
+      - postman
+      - microsoft-teams
+      - bitwarden
     brew_packages:
       - ansible
       - azure-cli
@@ -22,6 +28,9 @@
       - zsh
       - python@3.10
       - openssl@3
+      - htop
+      - tmux
+
     install_homebrew_if_missing: false
     upgrade_homebrew_packages: false
 

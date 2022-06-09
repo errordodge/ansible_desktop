@@ -3,7 +3,12 @@
 
 This repository contains the code that I use to set up my laptop.
 
-For a manual run: 
+## Prerequisites
+
+Need to have ansible installed in order to run either ansible command: `ansible-playbook | ansible-pull`
+Certain apps may require password input
+
+## For a manual run: 
 ```
 ansible-playbook local.yml
 
