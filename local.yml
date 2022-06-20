@@ -1,5 +1,5 @@
 ---
-- name: Install MacOS Packages
+- name: Bootstrap MacOS NavIt
   hosts: localhost
   become: false
   vars:
@@ -99,19 +99,19 @@
         owner: "{{ user_name }}"
         group: staff
 
-    - name: copy alwaysAdmin file
+    - name: copy admin file
       copy:
-        src: files/alwaysAdmin.sh
-        dest: /Users/{{ user_name }}/bin/alwaysAdmin.sh
+        src: files/admin.sh
+        dest: /Users/{{ user_name }}/bin/admin.sh
         owner: "{{ user_name }}"
         group: staff
 
-    - name: add alwaysAdmin cron job
+    - name: add admin cron job
       cron:
-        name: always be admin
+        name: activate admin
         user: "{{ user_name }}"
         minute: "*/5"
-        job: cd ~/bin && ./alwaysAdmin.sh
+        job: cd ~/bin && ./admin.sh
 
     - name: copy update-all file
       copy:
