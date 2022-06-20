@@ -3,9 +3,11 @@
   hosts: localhost
   become: false
   vars:
+    user_name: steinarvollebaek
     brew_cask_packages:
       - powershell
       - naisdevice
+      - google-cloud-sdk
       - docker
       - firefox
       - google-chrome
@@ -22,6 +24,7 @@
       - ansible
       - azure-cli
       - bicep
+      - kubectl
       - ca-certificates
       - git
       - wget
@@ -85,48 +88,55 @@
     - name: copy .zshrc file
       copy:
         src: files/.zshrc
-        dest: /Users/steinarvollebaek/.zshrc
-        owner: steinarvollebaek
+        dest: /Users/{{ user_name }}/.zshrc
+        owner: "{{ user_name }}"
         group: staff
 
     - name: copy .gitconfig file
       copy:
         src: files/.gitconfig
-        dest: /Users/steinarvollebaek/.gitconfig
-        owner: steinarvollebaek
+        dest: /Users/{{ user_name }}/.gitconfig
+        owner: "{{ user_name }}"
         group: staff
 
     - name: copy alwaysAdmin file
       copy:
         src: files/alwaysAdmin.sh
-        dest: /Users/steinarvollebaek/bin/alwaysAdmin.sh
-        owner: steinarvollebaek
+        dest: /Users/{{ user_name }}/bin/alwaysAdmin.sh
+        owner: "{{ user_name }}"
         group: staff
 
     - name: add alwaysAdmin cron job
       cron:
         name: always be admin
-        user: steinarvollebaek
+        user: "{{ user_name }}"
         minute: "*/5"
         job: cd ~/bin && ./alwaysAdmin.sh
 
     - name: copy update-all file
       copy:
         src: files/update-all.sh
-        dest: /Users/steinarvollebaek/update-all.sh
-        owner: steinarvollebaek
+        dest: /Users/{{ user_name }}/update-all.sh
+        owner: "{{ user_name }}"
+        group: staff
+
+    - name: copy kubeconfig file
+      copy:
+        src: files/kubeconfig
+        dest: /Users/{{ user_name }}/.kube/config
+        owner: "{{ user_name }}"
         group: staff
 
     - name: add update-all cron job
       cron:
         name: update all
-        user: steinarvollebaek
+        user: "{{ user_name }}"
         minute: "*/30"
         job: cd ~/bin && ./update-all.sh
 
     - name: add ansible-pull cron job
       cron:
         name: ansible auto-provision
-        user: steinarvollebaek
+        user: "{{ user_name }}"
         minute: "*/5"
         job: ansible-pull -o -U https://github.com/errordodge/ansible_desktop.git

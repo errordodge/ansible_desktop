@@ -10,7 +10,9 @@ Certain apps may require password input
 
 ## For a manual run: 
 ```
+Clone repo, cd into repo and run:
 ansible-playbook local.yml
 
+Or run this to remotely trigger run from GH repo
 ansible-pull -U https://github.com/errordodge/ansible_desktop.git
 ```
